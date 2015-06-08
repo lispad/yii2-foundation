@@ -21,6 +21,8 @@ class ActiveForm extends \yii\widgets\ActiveForm {
   
   public $layout = 'default';
 
+	public $enableClientValidation=false;
+
   /**
    * @inheritdoc
    */
@@ -34,6 +36,16 @@ class ActiveForm extends \yii\widgets\ActiveForm {
     }
     parent::init();
   }
+
+  /**
+   * @inheritdoc
+   */
+	public function field($model, $attribute, $options = []){
+		if (!isset($options['enableError']))
+			$options['enableError']=$model->hasErrors($attribute);
+
+		return parent::field($model, $attribute, $options);
+	}
   
   /**
    * @inheritdoc
